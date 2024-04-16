@@ -10,4 +10,6 @@ COPY . .
 
 EXPOSE 8080
 
+RUN npx knex migrate:latest && npx knex seed:run
+
 CMD ["npm", "start"]
