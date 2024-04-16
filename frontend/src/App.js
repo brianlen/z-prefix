@@ -1,5 +1,5 @@
 import React, { useState } from 'react';
-import { BrowserRouter, Routes, Route } from 'react-router-dom';
+import { BrowserRouter, Routes, Route, Link } from 'react-router-dom';
 import CreateAccount from './Pages/CreateAccount';
 import Login from './Pages/Login';
 import CreateItem from './Pages/CreateItem';
@@ -13,6 +13,15 @@ function App() {
     <BrowserRouter>
       <div>
         {user ? `Logged in as ${user.username}` : 'You are not logged in.'}
+
+        <nav><ul>
+          <Link to="/create_account">Create Account</Link>
+          <Link to="/login">Login</Link>
+          <Link to="/create_item">Create Item</Link>
+          <Link to="/inventory">Inventory</Link>
+        </ul></nav>
+
+
         <Routes>
           <Route path="/create_account" element={<CreateAccount setUser={setUser}/>} />
           <Route path="/login" element={<Login setUser={setUser}/>} />

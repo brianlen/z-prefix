@@ -9,7 +9,9 @@ app.use(express.json());
 
 // read all inventory
 app.get('/inventory', (req, res) => {
-
+    knex.select('*')
+        .from('Item')
+        .then(data => res.status(200).json(data));
 })
 
 // create a new item
@@ -30,5 +32,5 @@ app.delete('/inventory/item/:id', (req, res) => {
 
 
 app.listen(port, () => {
-  console.log(`Server is running on port ${port}`);
+    console.log(`Server is running on port ${port}`);
 });

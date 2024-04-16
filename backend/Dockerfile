@@ -4,12 +4,12 @@ WORKDIR /backend
 
 COPY package*.json /backend
 
-RUN npm install express knex pg cors
+RUN npm install
+RUN npm install -g nodemon
+RUN npm install express knex pg cors 
 
 COPY . .
 
 EXPOSE 8080
-
-RUN npx knex migrate:latest && npx knex seed:run
 
 CMD ["npm", "start"]
