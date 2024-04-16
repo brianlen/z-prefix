@@ -4,7 +4,7 @@ WORKDIR /backend
 
 COPY package*.json /backend
 
-RUN npm install express knex pg
+RUN npm install express knex pg cors
 
 COPY . .
 
