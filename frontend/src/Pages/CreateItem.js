@@ -17,7 +17,7 @@ function CreateItem({ user }) {
             quantity: quantity
         };
 
-        // Add your fetch POST request to create a new item here
+        // POST into the server and database
         fetch('http://localhost:8080/inventory/createItem', {
             method: 'POST',
             headers: { 'Content-Type': 'application/json' },
@@ -25,9 +25,6 @@ function CreateItem({ user }) {
         })
             .then(response => response.json())
             .then(() => navigate('/inventory'))
-
-
-
     };
 
     return (

@@ -11,8 +11,9 @@ app.use(express.json());
 
 // get the entire inventory
 app.get('/inventory', (req, res) => {
-    knex.select('*')
-        .from('Item')
+    knex('Item')
+        .join('User', 'Item.user_id', '=', 'User.user_id')
+        .select('Item.*', 'User.username')
         .then(data => res.status(200).json(data));
 });
 
@@ -33,12 +34,28 @@ app.post('/createAccount', (req, res) => {
         username: req.body.username,
         password: req.body.password
     };
-    // todo: needs to check if the username already exists
+
+    // Check if the username already exists
     knex('User')
-        .insert(newAccount)
-        .returning(['user_id', 'first_name', 'last_name', 'username'])
-        .then(accounts => res.status(201).json(accounts[0]));
+        .where({ username: newAccount.username })
+        .first()
+        .then(user => {
+            if (user) {
+                // If the username already exists, send a 409 Conflict response
+                res.status(409).json({ message: 'Username already exists' });
+            } else {
+                // If the username doesn't exist, insert the new account
+                return knex('User')
+                    .insert(newAccount)
+                    .returning(['user_id', 'first_name', 'last_name', 'username'])
+                    .then(accounts => res.status(201).json(accounts[0]));
+            }
+        })
+        .catch(error => {
+            res.status(500).json({ message: 'Error creating user', error: error });
+        });
 });
+  
 
 // login authentication
 app.post('/login', async (req, res) => {
@@ -51,6 +68,7 @@ app.post('/login', async (req, res) => {
       return res.status(401).json({ message: 'Invalid username or password' });
     }
   
+    // bcrypt compare
     const passwordMatch = await bcrypt.compare(password, user.password);
   
     // Check if password matches
@@ -64,17 +82,6 @@ app.post('/login', async (req, res) => {
     } else {
       return res.status(401).json({ message: 'Invalid username or password' });
     }
-   
-    // knex.select('*')
-    //     .from('User')
-    //     .where({ username: username,
-    //         password: password })
-    //     .then(data => res.status(201).json({
-    //         user_id: data.user_id,
-    //         first_name: data.first_name,
-    //         last_name: data.last_name,
-    //         username: data.username,
-    //     }));
 });
 
 // create a new item
@@ -91,9 +98,25 @@ app.post('/inventory/createItem', (req, res) => {
 });
 
 // update an existing item
-app.patch('/inventory/item/:id', (req, res) => {
+app.patch('/inventory/item/:item_id', (req, res) => {
+    const { item_id } = req.params;
+    const { item_name, description, quantity } = req.body;
 
-})
+    knex('Item')
+        .where({item_id: item_id})
+        .update({
+            item_name,
+            description,
+            quantity,
+        })
+        .then((count) => {
+            if (count > 0) {
+                res.status(200).json({ message: `item_id ${item_id} updated successfully` });
+            } else {
+                res.status(404).json({ message: `item_id ${item_id} not found` });
+            }
+        });
+});
 
 // http://localhost:8080/inventory/item/${item_id}
 // delete an item

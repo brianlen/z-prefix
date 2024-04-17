@@ -1,6 +1,5 @@
 import React, { useState } from 'react';
 import { useNavigate } from 'react-router-dom';
-// import bcrypt from 'bcryptjs';
 
 function Login({ setUser }) {
   const [username, setUsername] = useState('');
@@ -27,11 +26,15 @@ function Login({ setUser }) {
   };
 
   return (
-    <form onSubmit={handleSubmit}>
-      <input type="text" placeholder="Username" value={username} onChange={(e) => setUsername(e.target.value)} />
-      <input type="password" placeholder="Password" value={password} onChange={(e) => setPassword(e.target.value)} />
-      <button type="submit">Login</button>
-    </form>
+      <>
+          <h4>Login</h4>
+
+          <form onSubmit={handleSubmit}>
+              <input type="text" placeholder="Username" value={username} onChange={(e) => setUsername(e.target.value)} />
+              <input type="password" placeholder="Password" value={password} onChange={(e) => setPassword(e.target.value)} />
+              <button type="submit">Login</button>
+          </form>
+      </>
   );
 }
 
