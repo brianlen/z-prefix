@@ -1,15 +1,40 @@
 import React, { useState } from 'react';
+import { useNavigate } from 'react-router-dom';
+import bcrypt from 'bcryptjs';
 
 function CreateAccount({ setUser }) {
+  const navigate = useNavigate();
+
   const [firstName, setFirstName] = useState('');
   const [lastName, setLastName] = useState('');
   const [username, setUsername] = useState('');
   const [password, setPassword] = useState('');
 
-  const handleSubmit = (event) => {
+  const handleSubmit = async (event) => {
     event.preventDefault();
-    // Add your fetch POST request to create a new user here
-    // setUser with the new user's data
+
+    // encrypt the password using bcryptjs
+    const saltRounds = 10;
+    const encryptedPassword = await bcrypt.hash(password, saltRounds);
+
+    const requestBody = {
+      first_name: firstName,
+      last_name: lastName,
+      username: username,
+      password: encryptedPassword
+    }
+
+    // fetch POST to add new user account
+    fetch('http://localhost:8080/createAccount', {
+      method: 'POST',
+      headers: { 'Content-Type': 'application/json' },
+      body: JSON.stringify(requestBody)
+    })
+      .then(response => response.json())
+      .then(account => setUser(account))
+      .then(() => navigate('/inventory'))
+    
+    
   };
 
   return (

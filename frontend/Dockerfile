@@ -4,7 +4,8 @@ WORKDIR /frontend
 
 COPY package*.json /frontend
 
-RUN npm install react-router-dom
+RUN npm install
+RUN npm install react-router-dom bcryptjs
 
 COPY . .
 

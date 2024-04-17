@@ -9,9 +9,8 @@ exports.seed = async function (knex) {
 
     // Insert seed entries
     const users = [];
-    for (let i = 1; i <= 10; i++) {
+    for (let i = 1; i <= 3; i++) {
         users.push({ 
-            id: i, 
             first_name: `First${i}`, 
             last_name: `Last${i}`, 
             username: `User${i}`, 
@@ -20,17 +19,10 @@ exports.seed = async function (knex) {
     }
     await knex('User').insert(users);
 
-    // await knex('table_name').insert([
-    //     {id: 1, first_name: `First${i}`, last_name: `Last${i}`, username: `User${i}`, password: `Password${i}`},
-    //     {id: 1, first_name: `First${i}`, last_name: `Last${i}`, username: `User${i}`, password: `Password${i}`},
-    //     {id: 1, first_name: `First${i}`, last_name: `Last${i}`, username: `User${i}`, password: `Password${i}`},
-    //   ]);
-
     const items = [];
-    for (let i = 1; i <= 10; i++) {
+    for (let i = 1; i <= 3; i++) {
         items.push({ 
-            id: i, 
-            user_id: i, 
+            user_id: i,
             item_name: `Item${i}`, 
             description: `Description${i}`, 
             quantity: i 

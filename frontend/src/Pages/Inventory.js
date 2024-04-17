@@ -14,13 +14,13 @@ function Inventory({ user }) {
         // setItems with the fetched items data
     }, []);
 
-    const handleDelete = (id) => {
+    const handleDelete = (item_id) => {
         // Add your fetch DELETE request to delete an item here
         // Update items state
         console.log("delete was clicked ")
     };
 
-    const filteredItems = filter === 'all' ? items : items.filter(item => item.user_id === user.id);
+    const filteredItems = filter === 'all' ? items : items.filter(item => item.user_id === user.user_id);
 
     return (
         <div>
@@ -29,7 +29,7 @@ function Inventory({ user }) {
             <table>
                 <thead>
                     <tr>
-                        <th>ID</th>
+                        <th>Item ID</th>
                         <th>User ID</th>
                         <th>Item Name</th>
                         <th>Description</th>
@@ -38,14 +38,14 @@ function Inventory({ user }) {
                     </tr>
                 </thead>
                 <tbody>
-                    {items.map(item => (
-                        <tr key={item.id}>
-                            <td>{item.id}</td>
+                    {filteredItems.map(item => (
+                        <tr key={item.item_id}>
+                            <td>{item.item_id}</td>
                             <td>{item.user_id}</td>
-                            <td><Link to={`/inventory/item/${item.id}`}>{item.item_name}</Link></td>
+                            <td><Link to={`/inventory/item/${item.item_id}`}>{item.item_name}</Link></td>
                             <td>{item.description.length > 100 ? `${item.description.substring(0, 100)}...` : item.description}</td>
                             <td>{item.quantity}</td>
-                            <td><button onClick={() => handleDelete(item.id)}>Delete</button></td>
+                            <td><button onClick={() => handleDelete(item.item_id)}>Delete</button></td>
                         </tr>
                     ))}
                 </tbody>
