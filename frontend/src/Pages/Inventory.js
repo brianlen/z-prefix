@@ -14,10 +14,16 @@ function Inventory({ user }) {
         // setItems with the fetched items data
     }, []);
 
-    const handleDelete = (item_id) => {
-        // Add your fetch DELETE request to delete an item here
-        // Update items state
-        console.log("delete was clicked ")
+    const handleDelete = (item) => {
+        if (window.confirm(`Are you sure you want to delete item ${item.description}?`)) {
+            fetch(`http://localhost:8080/inventory/item/${item.item_id}`, { method: 'DELETE' })
+                .then(response => {
+                    if (response.ok) {
+                        // Update the items state to remove the deleted item
+                        setItems(items.filter(element => element.item_id !== item.item_id));
+                    }
+                })
+        }
     };
 
     const filteredItems = filter === 'all' ? items : items.filter(item => item.user_id === user.user_id);
@@ -45,7 +51,7 @@ function Inventory({ user }) {
                             <td><Link to={`/inventory/item/${item.item_id}`}>{item.item_name}</Link></td>
                             <td>{item.description.length > 100 ? `${item.description.substring(0, 100)}...` : item.description}</td>
                             <td>{item.quantity}</td>
-                            <td><button onClick={() => handleDelete(item.item_id)}>Delete</button></td>
+                            <td><button onClick={() => handleDelete(item)}>Delete</button></td>
                         </tr>
                     ))}
                 </tbody>

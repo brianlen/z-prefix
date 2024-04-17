@@ -95,8 +95,21 @@ app.patch('/inventory/item/:id', (req, res) => {
 
 })
 
+// http://localhost:8080/inventory/item/${item_id}
 // delete an item
-app.delete('/inventory/item/:id', (req, res) => {
+app.delete('/inventory/item/:item_id', (req, res) => {
+    const { item_id } = req.params;
+
+    knex('Item')
+        .where({item_id: item_id})
+        .del()
+        .then(count => {
+            if (count > 0) {
+                res.status(200).json({ message: `Item with ID ${item_id} deleted successfully` });
+            } else {
+                res.status(404).json({ message: `Item with ID ${item_id} not found` });
+            }
+        });
 
 })
 
