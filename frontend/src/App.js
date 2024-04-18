@@ -8,17 +8,41 @@ import ItemDetails from './Pages/ItemDetails';
 
 import { AppBar, Toolbar, Typography, Button } from '@mui/material';
 import ListAltRoundedIcon from '@mui/icons-material/ListAltRounded';
+import AccountBoxIcon from '@mui/icons-material/AccountBox';
+
+
+import Dialog from '@mui/material/Dialog';
+import DialogActions from '@mui/material/DialogActions';
+import DialogContent from '@mui/material/DialogContent';
+import DialogContentText from '@mui/material/DialogContentText';
+import DialogTitle from '@mui/material/DialogTitle';
+
+
 
 function App() {
     const navigate = useNavigate();
     const [user, setUser] = useState();
 
+
+    const [open, setOpen] = useState(false);
+
+    const handleClickOpen = (event) => {
+        event.preventDefault();
+        setOpen(true);
+    };
+
+    const handleClose = (event) => {
+        event.preventDefault();
+        setOpen(false);
+    };
+
     const handleLogout = (event) => {
         event.preventDefault();
-        if (window.confirm(`${user.first_name}, are you sure you want to log out?`)) {
+        // if (window.confirm(`${user.first_name}, are you sure you want to log out?`)) {
+            setOpen(false);
             setUser(null);
             navigate('/inventory');
-        };
+        // };
     }
 
     return (
@@ -27,15 +51,37 @@ function App() {
             <AppBar position="static">
                 <Toolbar>
                     <ListAltRoundedIcon style={{ marginRight: '10px' }} />
-                    <Typography variant="h6" style={{ flexGrow: 1 }}>
-                        Inventory Manager
-                    </Typography>
+                    <Typography variant="h6" onClick={() => navigate("/inventory")} style={{ flexGrow: 1 }}>Inventory Manager</Typography>
 
+                    {user && <Button color="inherit"><AccountBoxIcon/>{user.username}</Button>}
                     <Button color="inherit" onClick={() => navigate("/create_account")}>Create Account</Button>
                     <Button color="inherit" onClick={() => navigate("/inventory")}>Inventory</Button>
-                    {user ? <Button color="inherit" onClick={(e) => handleLogout(e)}>Logout</Button> : <Button color="inherit" onClick={() => navigate("/login")}>Login</Button>}
+                    {user ? <Button color="inherit" onClick={(e) => handleClickOpen(e)}>Logout</Button> : <Button color="inherit" onClick={() => navigate("/login")}>Login</Button>}
                 </Toolbar>
             </AppBar>
+
+
+
+
+            <Dialog
+                open={open}
+                onClose={(e) => handleClose(e)}
+                aria-labelledby="alert-dialog-title"
+                aria-describedby="alert-dialog-description"
+            >
+                <DialogTitle id="alert-dialog-title">
+                    {user && `${user.first_name}, are you sure you want to log out?`}
+                </DialogTitle>
+                <DialogActions>
+                    <Button onClick={(e) => handleClose(e)} color="primary">Cancel</Button>
+                    <Button onClick={(e) => handleLogout(e)} color="primary" autoFocus>Logout</Button>
+                </DialogActions>
+            </Dialog>
+
+
+
+
+
 
 
             {user ?

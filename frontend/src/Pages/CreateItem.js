@@ -4,6 +4,8 @@ import TextField from '@mui/material/TextField';
 import Button from '@mui/material/Button';
 import Box from '@mui/material/Box';
 import Grid from '@mui/material/Grid';
+import ArrowBackIcon from '@mui/icons-material/ArrowBack';
+import AddBoxIcon from '@mui/icons-material/AddBox';
 
 
 function CreateItem({ user }) {
@@ -39,14 +41,54 @@ function CreateItem({ user }) {
                 direction="column"
                 justifyContent="center"
                 alignItems="center"
-                style={{ minHeight: '50vh' }}
+                style={{ minHeight: '80vh' }}
                 spacing={2}
             >
-                <Grid item><Button variant="contained" color="primary" onClick={() => navigate('/inventory')}>Back</Button></Grid>
-                <Grid item><TextField type="text" label="Item Name" value={itemName} onChange={(e) => setItemName(e.target.value)} /></Grid>
-                <Grid item><TextField type="text" label="Description" value={description} onChange={(e) => setDescription(e.target.value)} /></Grid>
-                <Grid item><TextField type="number" label="Quantity" value={quantity} onChange={(e) => setQuantity(e.target.value)} /></Grid>
-                <Grid item><Button variant="contained" color="primary" type="submit">Create Item</Button></Grid>
+                <Grid item>
+                    <Button
+                        variant="contained"
+                        color="primary"
+                        onClick={() => navigate('/inventory')}><ArrowBackIcon />
+                    </Button>
+                </Grid>
+                <Grid item>
+                    <TextField
+                        type="text"
+                        label="Item Name"
+                        style={{ width: '15vw' }}
+                        value={itemName}
+                        onChange={(e) => setItemName(e.target.value)} />
+                </Grid>
+                <Grid item>
+                    <TextField
+                        multiline
+                        rows={6}
+                        type="text"
+                        label="Description"
+                        style={{ width: '15vw' }}
+                        value={description}
+                        onChange={(e) => setDescription(e.target.value)}
+                    />
+                </Grid>
+                <Grid item>
+                    <TextField
+                        type="number"
+                        label="Quantity"
+                        style={{ width: '15vw' }}
+                        value={quantity}
+                        onChange={(e) => setQuantity(e.target.value)}
+                        inputProps={{
+                            min: 0,
+                        }}
+                    />
+                </Grid>
+                <Grid item>
+                    <Button
+                        variant="contained"
+                        color="primary"
+                        type="submit"><AddBoxIcon style={{ marginRight: '5px' }} />Create Item
+                    </Button>
+                </Grid>
             </Grid>
         </Box>
     );

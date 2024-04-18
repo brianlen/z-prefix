@@ -111,7 +111,7 @@ app.patch('/inventory/item/:item_id', (req, res) => {
         })
         .then((count) => {
             if (count > 0) {
-                res.status(200).json({ message: `item_id ${item_id} updated successfully` });
+                res.status(200).json({ message: `Item updated successfully!` });
             } else {
                 res.status(404).json({ message: `item_id ${item_id} not found` });
             }

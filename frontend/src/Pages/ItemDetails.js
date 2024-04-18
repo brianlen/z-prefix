@@ -4,6 +4,12 @@ import TextField from '@mui/material/TextField';
 import Button from '@mui/material/Button';
 import Box from '@mui/material/Box';
 import Grid from '@mui/material/Grid';
+import Alert from '@mui/material/Alert';
+import ArrowBackIcon from '@mui/icons-material/ArrowBack';
+import DeleteIcon from '@mui/icons-material/Delete';
+import SaveIcon from '@mui/icons-material/Save';
+import EditIcon from '@mui/icons-material/Edit';
+
 
 function ItemDetails({ user }) {
     const navigate = useNavigate();
@@ -14,6 +20,8 @@ function ItemDetails({ user }) {
     const [quantity, setQuantity] = useState();
     const [isEditing, setIsEditing] = useState(false);
 
+    const [alertOpen, setAlertOpen] = useState(false);
+    const [alertMessage, setAlertMessage] = useState('');
 
     useEffect(() => {
         const fetchItem = async () => {
@@ -61,7 +69,10 @@ function ItemDetails({ user }) {
                     console.error('Error updating item:', response.status, response.statusText);
                 }
             })
-            .then(data => window.alert(data.message))
+            .then(data => {
+                setAlertMessage(data.message);
+                setAlertOpen(true);
+            })
             .catch((error) => {
                 console.error('Error updating item:', error);
             });
@@ -86,29 +97,22 @@ function ItemDetails({ user }) {
 
 
     if (item.length === 0) {
-        return <>Loading...</>
+        return null;
     } else {
 
         return (
             <>
-
-                <p>item_id: {item[0].item_id}</p>
-                <p>user_id: {item[0].user_id}</p>
-
-
+                {alertOpen && <Alert severity="success" onClose={() => setAlertOpen(false)}>{alertMessage}</Alert>}
+     
                 <Grid
                     container
                     direction="column"
                     justifyContent="center"
                     alignItems="center"
-                    style={{ minHeight: '50vh' }}
+                    style={{ minHeight: '80vh' }}
                 >
                     <Box mb={2}>
-                        <Button variant="contained" color="primary" onClick={() => navigate('/inventory')} style={{ marginRight: '10px' }}>Back</Button>
-                        {user && (isEditing ?
-                            <Button variant="contained" color="primary" onClick={(e) => handleSave(e)} style={{ marginRight: '10px' }}>Save</Button> :
-                            <Button variant="contained" color="primary" onClick={(e) => handleEdit(e)} style={{ marginRight: '10px' }}>Edit</Button>
-                        )}
+                        <Button variant="contained" color="primary" onClick={() => navigate('/inventory')} style={{ marginRight: '10px' }}><ArrowBackIcon/></Button>
                     </Box>
 
                     <Box mb={2}>
@@ -125,12 +129,12 @@ function ItemDetails({ user }) {
                     <Box mb={2}>
                         <TextField
                             multiline
-                            rows={2}
+                            rows={6}
                             type="text"
                             label="Description"
                             value={description}
                             onChange={(e) => { setDescription(e.target.value) }}
-                            style={{width: '40vw'}}
+                            style={{width: '15vw'}}
                             InputProps={{readOnly: !isEditing }}
                         />
                     </Box>
@@ -143,14 +147,18 @@ function ItemDetails({ user }) {
                             onChange={(e) => { setQuantity(e.target.value) }}
                             style={{width: '15vw'}}
                             InputProps={{ readOnly: !isEditing }}
+                            inputProps={{min: 0}}
                         />
                     </Box>
 
                     <Box mb={2}>
-                        
-                        {user ?
-                            <Button variant="contained" sx={{ color: 'white', backgroundColor: 'red', borderColor: 'black' }} onClick={() => handleDelete(item[0])}>Delete</Button> :
-                            <></>
+                        {user && (isEditing ?
+                            <Button variant="contained" color="primary" onClick={(e) => handleSave(e)} style={{ marginRight: '10px' }}><SaveIcon/>Save</Button> :
+                            <Button variant="contained" color="primary" onClick={(e) => handleEdit(e)} style={{ marginRight: '10px' }}><EditIcon/>Edit</Button>
+                        )}
+                        {user &&
+                            <Button variant="contained" sx={{ color: 'white', backgroundColor: 'red', borderColor: 'black' }} onClick={() => handleDelete(item[0])}><DeleteIcon/></Button>
+                            
                         }
                     </Box>
                 </Grid>

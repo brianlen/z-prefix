@@ -5,6 +5,7 @@ import TextField from '@mui/material/TextField';
 import Button from '@mui/material/Button';
 import Box from '@mui/material/Box';
 import Grid from '@mui/material/Grid';
+import ArrowBackIcon from '@mui/icons-material/ArrowBack';
 
 function CreateAccount({ setUser }) {
     const navigate = useNavigate();
@@ -49,14 +50,19 @@ function CreateAccount({ setUser }) {
                 direction="column"
                 justifyContent="center"
                 alignItems="center"
-                style={{ minHeight: '50vh' }}
+                style={{ minHeight: '80vh' }}
             >
+                <Box mb={2}>
+                    <Button variant="contained" color="primary" onClick={() => navigate('/inventory')}><ArrowBackIcon /></Button>
+                </Box>
+
                 <Box mb={2}>
                     <TextField
                         label="First Name"
                         placeholder="First Name"
                         value={firstName}
                         onChange={(e) => setFirstName(e.target.value)}
+                        style={{marginRight: '10px'}}
                     />
 
                     <TextField
@@ -73,6 +79,7 @@ function CreateAccount({ setUser }) {
                         placeholder="Username"
                         value={username}
                         onChange={(e) => setUsername(e.target.value)}
+                        style={{marginRight: '10px'}}
                     />
 
                     <TextField
