@@ -1,5 +1,6 @@
 import React, { useState } from 'react';
-import { Routes, Route, Link, useNavigate } from 'react-router-dom';
+import { Routes, Route, useNavigate } from 'react-router-dom';
+import Account from './Pages/Account';
 import CreateAccount from './Pages/CreateAccount';
 import Login from './Pages/Login';
 import CreateItem from './Pages/CreateItem';
@@ -57,12 +58,13 @@ function App() {
                     <ListAltRoundedIcon style={{ marginRight: '10px' }} />
                     <Typography variant="h6" onClick={() => navigate("/inventory")} style={{ flexGrow: 1 }}>Inventory Manager</Typography>
 
-                    {user ? <Button color="inherit"><AccountBoxIcon/>{user.username}</Button> : null}
+                    {user ? <Button color="inherit" onClick={() => navigate("/account")}><AccountBoxIcon/>{user.username}</Button> : null}
                     <Button color="inherit" onClick={() => navigate("/create_account")}><GroupAddIcon style={{marginRight:'3px'}}/>Create Account</Button>
                     <Button color="inherit" onClick={() => navigate("/inventory")}><ListAltRoundedIcon/>Inventory</Button>
                     {user ? <Button color="inherit" onClick={(e) => handleClickOpen(e)}><LogoutIcon/>Logout</Button> : <Button color="inherit" onClick={() => navigate("/login")}><LoginIcon/>Login</Button>}
                 </Toolbar>
             </AppBar>
+
 
 
 
@@ -86,19 +88,9 @@ function App() {
 
 
 
-
-
-            {user ?
-                <div style={{color: 'white'}}>
-                    {`Logged in as ${user.username}. Welcome ${user.first_name} ${user.last_name}. Your user_id is ${user.user_id}. `}
-                </div>
-                :
-                <div style={{color: 'white'}}>{'You are not logged in. '}</div>
-            }
-
-
-
             <Routes>
+                <Route exact path="/" element={<Login setUser={setUser}/>}></Route>
+                <Route path="/account" element={<Account user={user} />} />
                 <Route path="/create_account" element={<CreateAccount setUser={setUser} />} />
                 <Route path="/login" element={<Login setUser={setUser} />} />
                 <Route path="/create_item" element={<CreateItem user={user} />} />
@@ -108,26 +100,5 @@ function App() {
         </div>
     );
 }
-
-
-
-// <h1>Inventory Database Manager</h1>
-// {user ?
-//     <div>
-//         {`Logged in as ${user.username}. Welcome ${user.first_name} ${user.last_name}. Your user_id is ${user.user_id}. `}
-//         <button onClick={(e) => handleLogout(e)}>Log out</button>
-//     </div>
-//     :
-//     <div>{'You are not logged in. '}<button><Link to="/login">Login</Link></button></div>
-// }
-
-// <nav><ul>
-//     <li><Link to="/create_account">Create Account</Link></li>
-//     <li><Link to="/login">Login</Link></li>
-//     {user ? <li><Link to="/create_item">Create Item</Link></li> : null}
-//     <li><Link to="/inventory">Inventory</Link></li>
-// </ul></nav>
-
-
 
 export default App;

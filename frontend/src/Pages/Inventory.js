@@ -55,7 +55,7 @@ function Inventory({ user }) {
 
     return (
         <div>
-
+            <Box mt={2}>
             <Grid
                 container
                 direction="column"
@@ -104,6 +104,7 @@ function Inventory({ user }) {
                     </TableContainer>
                 </Box>
             </Grid>
+            </Box>
         </div>
     );
 

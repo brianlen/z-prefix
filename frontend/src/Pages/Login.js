@@ -39,7 +39,7 @@ function Login({ setUser }) {
                 direction="column"
                 justifyContent="center"
                 alignItems="center"
-                style={{ minHeight: '50vh' }}
+                style={{ minHeight: '80vh' }}
             >
 
                 <Box mb={2}>
