@@ -70,7 +70,7 @@ function Inventory({ user }) {
                             <Button variant="contained" color="primary" onClick={() => setFilter('all')} style={{ marginRight: '10px' }} ><WbSunnyIcon style={{marginRight:'5px'}}/>All Inventory</Button>
                             <Button variant="contained" color="primary" onClick={() => setFilter('mine')} style={{ marginRight: '10px' }} ><WbIncandescentIcon style={{marginRight:'5px'}}/>My Inventory</Button>
                             <Button variant="contained" color="primary" onClick={() => navigate('/create_item')} style={{marginRight:'10px'}}><AddBoxIcon style={{marginRight:'5px'}}/>Create Item</Button>
-                            <TextField autoComplete='off' label="Filter" variant="outlined" onChange={handleFilterChange} size='small' />
+                            <TextField label="Filter" variant="outlined" onChange={handleFilterChange} size='small' autoComplete='off' />
                         </> : <Button variant="contained" color="primary" onClick={() => navigate('/login')}><LoginIcon/>Login</Button>
                     }
                 </Box>

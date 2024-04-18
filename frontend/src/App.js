@@ -26,7 +26,7 @@ import DialogTitle from '@mui/material/DialogTitle';
 
 function App() {
     const navigate = useNavigate();
-    const [user, setUser] = useState();
+    const [user, setUser] = useState(JSON.parse(localStorage.getItem('user')) || null);
 
 
     const [open, setOpen] = useState(false);
@@ -55,8 +55,8 @@ function App() {
 
             <AppBar position="static">
                 <Toolbar>
-                    <ListAltRoundedIcon style={{ marginRight: '10px' }} />
-                    <Typography variant="h6" onClick={() => navigate("/inventory")} style={{ flexGrow: 1 }}>Inventory Manager</Typography>
+                    <Button color="inherit" onClick={() => navigate("/inventory")}><ListAltRoundedIcon/></Button>
+                    <Typography variant="h6" style={{ flexGrow: 1 }}>Inventory Manager</Typography>
 
                     {user ? <Button color="inherit" onClick={() => navigate("/account")}><AccountBoxIcon/>{user.username}</Button> : null}
                     <Button color="inherit" onClick={() => navigate("/create_account")}><GroupAddIcon style={{marginRight:'3px'}}/>Create Account</Button>

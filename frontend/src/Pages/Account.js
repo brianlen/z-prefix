@@ -52,6 +52,7 @@ function Account({ user }) {
                         label="Username"
                         value={user.username}
                         readOnly
+                        autoComplete="off"
                     />
                 </Box>
 
