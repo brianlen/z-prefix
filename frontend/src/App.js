@@ -27,28 +27,28 @@ import DialogTitle from '@mui/material/DialogTitle';
 function App() {
     const navigate = useNavigate();
     const [user, setUser] = useState(JSON.parse(localStorage.getItem('user')) || null);
-
-
     const [open, setOpen] = useState(false);
 
+    // for logout dialog
     const handleClickOpen = (event) => {
         event.preventDefault();
         setOpen(true);
     };
 
+    // for logout dialog
     const handleClose = (event) => {
         event.preventDefault();
         setOpen(false);
     };
 
+    // runs after confirming logout dialog
     const handleLogout = (event) => {
         event.preventDefault();
-        // if (window.confirm(`${user.first_name}, are you sure you want to log out?`)) {
             setOpen(false);
             setUser(null);
+            localStorage.setItem('user', JSON.stringify(null))
             navigate('/inventory');
-        // };
-    }
+    };
 
     return (
         <div>

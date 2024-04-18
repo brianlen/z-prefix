@@ -27,8 +27,8 @@ function Login({ setUser }) {
         })
             .then(response => response.json())
             .then(userData => {
-                setUser(userData)
-                localStorage.setItem('user', JSON.stringify(userData))
+                setUser(userData);
+                localStorage.setItem('user', JSON.stringify(userData));
             })
             .then(() => navigate('/inventory'))
     };
