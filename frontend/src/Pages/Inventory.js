@@ -12,7 +12,7 @@ import LoginIcon from '@mui/icons-material/Login';
 function Inventory({ user }) {
     const navigate = useNavigate();
     const [items, setItems] = useState([]);
-    const [filter, setFilter] = useState('all');
+    const [filter, setFilter] = useState(user ? 'mine' : 'all');
     const [filterText, setFilterText] = useState('');
 
     useEffect(() => {

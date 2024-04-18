@@ -44,10 +44,10 @@ function App() {
     // runs after confirming logout dialog
     const handleLogout = (event) => {
         event.preventDefault();
-            setOpen(false);
-            setUser(null);
-            localStorage.setItem('user', JSON.stringify(null))
-            navigate('/inventory');
+        navigate('/login');
+        setOpen(false);
+        setUser(null);
+        localStorage.setItem('user', JSON.stringify(null))
     };
 
     return (

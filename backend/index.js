@@ -35,6 +35,11 @@ app.post('/createAccount', (req, res) => {
         password: req.body.password
     };
 
+    // check if the username is null or empty
+    if (!newAccount.username || newAccount.username.trim() === '') {
+        return res.status(400).json({ message: 'Username cannot be null or empty' });
+    }
+
     // Check if the username already exists
     knex('User')
         .where({ username: newAccount.username })
@@ -55,6 +60,7 @@ app.post('/createAccount', (req, res) => {
             res.status(500).json({ message: 'Error creating user', error: error });
         });
 });
+
   
 
 // login authentication
@@ -67,11 +73,14 @@ app.post('/login', async (req, res) => {
     if (!user) {
       return res.status(401).json({ message: 'Invalid username or password' });
     }
-  
+
     // bcrypt compare
-    const passwordMatch = await bcrypt.compare(password, user.password);
-  
-    // Check if password matches
+    let passwordMatch = false;
+    if (user) {
+        passwordMatch = await bcrypt.compare(password, user.password);
+    }
+
+    // if password matches, send user object
     if (passwordMatch) {
       return res.status(200).json({
         user_id: user.user_id,

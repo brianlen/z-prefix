@@ -7,8 +7,8 @@ This application is an Inventory Manager built with React. It provides a user-fr
 This application was created using:
 
 1. React frontend application, 
-2. an Express API backend server with Knex, and 
-3. a Postgres Docker image database.
+2. an Express API backend server with Knex,  
+3. and a Postgres Docker image database.
 
 ### Prerequisites
 
@@ -21,7 +21,7 @@ Clone the repo:
 
 1. `git clone git@github.com:brianlen/z-prefix.git`
 
-The project is Dockerized into (1) frontend, (2) backend, and (3) database:
+The project is Dockerized into (1) frontend, (2) backend, and (3) database. Run the following where the docker-compose.yaml is located:
 
 2. `docker-compose up -d`
 
@@ -39,8 +39,6 @@ Three example accounts are seeded in the 'User' database. Each account has a pas
 
 5. `johndoe`, `janedoe`, `henrycho`
 
-
-
 ## Built With
 
 * npm
@@ -50,14 +48,6 @@ Three example accounts are seeded in the 'User' database. Each account has a pas
 * Knex
 * Postgres
 * Docker
-
-## Contributing
-
-Please read CONTRIBUTING.md for details on our code of conduct, and the process for submitting pull requests to us.
-
-## Versioning
-
-We use SemVer for versioning. For the versions available, see the tags on this repository. 
 
 ## Authors
 

@@ -5,7 +5,6 @@ import TextField from '@mui/material/TextField';
 import Button from '@mui/material/Button';
 import Box from '@mui/material/Box';
 import Grid from '@mui/material/Grid';
-import ArrowBackIcon from '@mui/icons-material/ArrowBack';
 
 function CreateAccount({ setUser }) {
     const navigate = useNavigate();
@@ -35,12 +34,29 @@ function CreateAccount({ setUser }) {
             headers: { 'Content-Type': 'application/json' },
             body: JSON.stringify(requestBody)
         })
-            .then(response => response.json())
-            .then(account => setUser(account))
-            .then(() => navigate('/inventory'))
-
-
-    };
+            .then(response => {
+                if (!response.ok) {
+                    // return window.alert(`HTTP error! status: ${response.status}`);
+                } else if (response.ok) {
+                    return response.json();
+                }
+            })
+            .then(account => {
+                setUser(account);
+                return account;
+            })
+            .then(account => {
+                if (account) {
+                    navigate('/inventory');
+                } else {
+                    window.alert('Username already exists!');
+                }
+            })
+            .catch(error => {
+                window.alert('There was a problem with the fetch operation: ', error.message);
+            });
+        };
+    
 
     return (
 
@@ -52,9 +68,6 @@ function CreateAccount({ setUser }) {
                 alignItems="center"
                 style={{ minHeight: '80vh' }}
             >
-                <Box mb={2}>
-                    <Button variant="contained" color="primary" onClick={() => navigate('/inventory')}><ArrowBackIcon /></Button>
-                </Box>
 
                 <Box mb={2}>
                     <TextField
