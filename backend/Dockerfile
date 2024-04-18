@@ -12,4 +12,4 @@ COPY . .
 
 EXPOSE 8080
 
-CMD ["npm", "start", "&&", "npx knex migrate:latest", "&&", "npx knex seed:run"]
+CMD ["npm", "start"]

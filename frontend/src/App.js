@@ -6,11 +6,15 @@ import CreateItem from './Pages/CreateItem';
 import Inventory from './Pages/Inventory';
 import ItemDetails from './Pages/ItemDetails';
 
+// Misc MUI imports
 import { AppBar, Toolbar, Typography, Button } from '@mui/material';
 import ListAltRoundedIcon from '@mui/icons-material/ListAltRounded';
 import AccountBoxIcon from '@mui/icons-material/AccountBox';
+import GroupAddIcon from '@mui/icons-material/GroupAdd';
+import LogoutIcon from '@mui/icons-material/Logout';
+import LoginIcon from '@mui/icons-material/Login';
 
-
+// imports for AppBar
 import Dialog from '@mui/material/Dialog';
 import DialogActions from '@mui/material/DialogActions';
 import DialogContent from '@mui/material/DialogContent';
@@ -53,10 +57,10 @@ function App() {
                     <ListAltRoundedIcon style={{ marginRight: '10px' }} />
                     <Typography variant="h6" onClick={() => navigate("/inventory")} style={{ flexGrow: 1 }}>Inventory Manager</Typography>
 
-                    {user && <Button color="inherit"><AccountBoxIcon/>{user.username}</Button>}
-                    <Button color="inherit" onClick={() => navigate("/create_account")}>Create Account</Button>
-                    <Button color="inherit" onClick={() => navigate("/inventory")}>Inventory</Button>
-                    {user ? <Button color="inherit" onClick={(e) => handleClickOpen(e)}>Logout</Button> : <Button color="inherit" onClick={() => navigate("/login")}>Login</Button>}
+                    {user ? <Button color="inherit"><AccountBoxIcon/>{user.username}</Button> : null}
+                    <Button color="inherit" onClick={() => navigate("/create_account")}><GroupAddIcon style={{marginRight:'3px'}}/>Create Account</Button>
+                    <Button color="inherit" onClick={() => navigate("/inventory")}><ListAltRoundedIcon/>Inventory</Button>
+                    {user ? <Button color="inherit" onClick={(e) => handleClickOpen(e)}><LogoutIcon/>Logout</Button> : <Button color="inherit" onClick={() => navigate("/login")}><LoginIcon/>Login</Button>}
                 </Toolbar>
             </AppBar>
 
