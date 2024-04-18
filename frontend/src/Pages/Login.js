@@ -1,41 +1,72 @@
 import React, { useState } from 'react';
 import { useNavigate } from 'react-router-dom';
+import TextField from '@mui/material/TextField';
+import Button from '@mui/material/Button';
+import Box from '@mui/material/Box';
+import Grid from '@mui/material/Grid';
 
 function Login({ setUser }) {
-  const [username, setUsername] = useState('');
-  const [password, setPassword] = useState('');
-  const navigate = useNavigate();
+    const navigate = useNavigate();
+    const [username, setUsername] = useState('');
+    const [password, setPassword] = useState('');
 
-  const handleSubmit = (event) => {
-      event.preventDefault();
 
-      const requestBody = {
-          username: username,
-          password: password
-      }
+    const handleSubmit = (event) => {
+        event.preventDefault();
 
-      // fetch POST to compare password with the encryptedPassword
-      fetch('http://localhost:8080/login', {
-          method: 'POST',
-          headers: { 'Content-Type': 'application/json' },
-          body: JSON.stringify(requestBody)
-      })
-          .then(response => response.json())
-          .then(userData => setUser(userData))
-          .then(() => navigate('/inventory'))
-  };
+        const requestBody = {
+            username: username,
+            password: password
+        }
 
-  return (
-      <>
-          <h4>Login</h4>
+        // fetch POST to compare password with the encryptedPassword
+        fetch('http://localhost:8080/login', {
+            method: 'POST',
+            headers: { 'Content-Type': 'application/json' },
+            body: JSON.stringify(requestBody)
+        })
+            .then(response => response.json())
+            .then(userData => setUser(userData))
+            .then(() => navigate('/inventory'))
+    };
 
-          <form onSubmit={handleSubmit}>
-              <input type="text" placeholder="Username" value={username} onChange={(e) => setUsername(e.target.value)} />
-              <input type="password" placeholder="Password" value={password} onChange={(e) => setPassword(e.target.value)} />
-              <button type="submit">Login</button>
-          </form>
-      </>
-  );
+    return (
+        
+        <Box component="form" onSubmit={handleSubmit} noValidate autoComplete="off">
+
+            <Grid
+                container
+                direction="column"
+                justifyContent="center"
+                alignItems="center"
+                style={{ minHeight: '50vh' }}
+            >
+
+                <Box mb={2}>
+                    <TextField
+                        label="Username"
+                        defaultValue="johndoe"
+                        value={username}
+                        onChange={(e) => setUsername(e.target.value)}
+                    />
+                </Box>
+
+                <Box mb={2}>
+                    <TextField
+                        label="Password"
+                        type="password"
+                        autoComplete="current-password"
+                        value={password}
+                        onChange={(e) => setPassword(e.target.value)}
+                    />
+                </Box>
+
+                <Button type="submit" variant="contained">Login</Button>
+
+            </Grid>
+        </Box>
+
+    );
 }
 
 export default Login;

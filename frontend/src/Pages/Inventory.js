@@ -1,6 +1,6 @@
 import React, { useState, useEffect } from 'react';
 import { useNavigate } from 'react-router-dom';
-import { Button, Table, TableBody, TableCell, TableContainer, TableHead, TableRow, Paper} from '@mui/material';
+import { Box, Button, Grid, Table, TableBody, TableCell, TableContainer, TableHead, TableRow, Paper } from '@mui/material';
 
 function Inventory({ user }) {
     const navigate = useNavigate();
@@ -30,39 +30,54 @@ function Inventory({ user }) {
 
     return (
         <div>
-            {user ?
-                <>
-                    <Button variant="contained" color="primary" onClick={() => setFilter('all')}>All Inventory</Button>
-                    <Button variant="contained" color="primary" onClick={() => setFilter('mine')}>My Inventory</Button>
-                </> : null
-            }
 
-            <TableContainer component={Paper}>
-                <Table>
-                    <TableHead>
-                        <TableRow>
-                            <TableCell>Item ID</TableCell>
-                            <TableCell>Username</TableCell>
-                            <TableCell>Item Name</TableCell>
-                            <TableCell>Description</TableCell>
-                            <TableCell>Quantity</TableCell>
-                            <TableCell>Delete</TableCell>
-                        </TableRow>
-                    </TableHead>
-                    <TableBody>
-                        {filteredItems.map(item => (
-                            <TableRow key={item.item_id}>
-                                <TableCell>{item.item_id}</TableCell>
-                                <TableCell>{item.username}</TableCell>
-                                <TableCell>{<Button variant="contained" sx={{ color: 'white', backgroundColor: 'primary', borderColor: 'black' }} onClick={() => navigate(`/inventory/item/${item.item_id}`)}>{item.item_name}</Button>}</TableCell>
-                                <TableCell>{item.description.length > 100 ? `${item.description.substring(0, 100)}...` : item.description}</TableCell>
-                                <TableCell>{item.quantity}</TableCell>
-                                <TableCell>{user ? <Button variant="contained" sx={{ color: 'white', backgroundColor: 'red', borderColor: 'black' }} onClick={() => handleDelete(item)}>Delete</Button> : null}</TableCell>
-                            </TableRow>
-                        ))}
-                    </TableBody>
-                </Table>
-            </TableContainer>
+            <Grid
+                container
+                direction="column"
+                justifyContent="center"
+                alignItems="center"
+                style={{ minHeight: '50vh' }}
+            >
+
+                <Box mb={2}>
+                    {user ?
+                        <>
+                            <Button variant="contained" color="primary" onClick={() => setFilter('all')} style={{ marginRight: '10px' }} >All Inventory</Button>
+                            <Button variant="contained" color="primary" onClick={() => setFilter('mine')} style={{ marginRight: '10px' }} >My Inventory</Button>
+                            <Button variant="contained" color="primary" onClick={() => navigate('/create_item')}>Create Item</Button>
+                        </> : null
+                    }
+                </Box>
+
+                <Box style={{ width: '60vw', margin: '0 auto' }}>
+                    <TableContainer component={Paper}>
+                        <Table>
+                            <TableHead>
+                                <TableRow>
+                                    <TableCell>Item ID</TableCell>
+                                    <TableCell>Username</TableCell>
+                                    <TableCell>Item Name</TableCell>
+                                    <TableCell>Description</TableCell>
+                                    <TableCell>Quantity</TableCell>
+                                    <TableCell>Delete</TableCell>
+                                </TableRow>
+                            </TableHead>
+                            <TableBody>
+                                {filteredItems.map(item => (
+                                    <TableRow key={item.item_id}>
+                                        <TableCell>{item.item_id}</TableCell>
+                                        <TableCell>{item.username}</TableCell>
+                                        <TableCell>{<Button variant="contained" sx={{ color: 'white', backgroundColor: 'primary', borderColor: 'black' }} onClick={() => navigate(`/inventory/item/${item.item_id}`)}>{item.item_name}</Button>}</TableCell>
+                                        <TableCell>{item.description.length > 100 ? `${item.description.substring(0, 100)}...` : item.description}</TableCell>
+                                        <TableCell>{item.quantity}</TableCell>
+                                        <TableCell>{user ? <Button variant="contained" sx={{ color: 'white', backgroundColor: 'red', borderColor: 'black' }} onClick={() => handleDelete(item)}>Delete</Button> : null}</TableCell>
+                                    </TableRow>
+                                ))}
+                            </TableBody>
+                        </Table>
+                    </TableContainer>
+                </Box>
+            </Grid>
         </div>
     );
 

@@ -6,7 +6,7 @@ COPY package*.json /frontend
 
 RUN npm install
 RUN npm install react-router-dom bcryptjs
-RUN npm install @mui/material @emotion/react @emotion/styled @fontsource/roboto
+RUN npm install @mui/material @mui/icons-material @emotion/react @emotion/styled @fontsource/roboto 
 
 COPY . .
 

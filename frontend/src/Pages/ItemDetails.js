@@ -1,5 +1,9 @@
 import React, { useState, useEffect } from 'react';
 import { useParams, useNavigate } from 'react-router-dom';
+import TextField from '@mui/material/TextField';
+import Button from '@mui/material/Button';
+import Box from '@mui/material/Box';
+import Grid from '@mui/material/Grid';
 
 function ItemDetails({ user }) {
     const navigate = useNavigate();
@@ -88,17 +92,69 @@ function ItemDetails({ user }) {
         return (
             <>
 
-            <p>item_id: {item[0].item_id}</p>
-            <p>user_id: {item[0].user_id}</p>
+                <p>item_id: {item[0].item_id}</p>
+                <p>user_id: {item[0].user_id}</p>
 
-            <form style={{ display: 'flex', flexDirection: 'column', gap: '10px' }}>
-                <input type="text" placeholder="Item name" value={itemName} onChange={(e) => { setItemName(e.target.value) }} readOnly={!isEditing} />
-                <input type="text" placeholder="Description" value={description} onChange={(e) => { setDescription(e.target.value) }} readOnly={!isEditing} />
-                <input type="number" placeholder="Quantity" value={quantity} onChange={(e) => { setQuantity(e.target.value) }} readOnly={!isEditing} />
 
-                {user && (isEditing ? <button onClick={(e) => handleSave(e)}>Save</button> : <button onClick={(e) => handleEdit(e)}>Edit</button>)}
-                {user ? <button onClick={() => handleDelete(item[0])}>Delete</button> : <></>}
-            </form>
+                <Grid
+                    container
+                    direction="column"
+                    justifyContent="center"
+                    alignItems="center"
+                    style={{ minHeight: '50vh' }}
+                >
+                    <Box mb={2}>
+                        <Button variant="contained" color="primary" onClick={() => navigate('/inventory')} style={{ marginRight: '10px' }}>Back</Button>
+                        {user && (isEditing ?
+                            <Button variant="contained" color="primary" onClick={(e) => handleSave(e)} style={{ marginRight: '10px' }}>Save</Button> :
+                            <Button variant="contained" color="primary" onClick={(e) => handleEdit(e)} style={{ marginRight: '10px' }}>Edit</Button>
+                        )}
+                    </Box>
+
+                    <Box mb={2}>
+                        <TextField
+                            type="text"
+                            label="Item name"
+                            value={itemName}
+                            onChange={(e) => { setItemName(e.target.value) }}
+                            style={{width: '15vw'}}
+                            InputProps={{ readOnly: !isEditing }}
+                        />
+                    </Box>
+
+                    <Box mb={2}>
+                        <TextField
+                            multiline
+                            rows={2}
+                            type="text"
+                            label="Description"
+                            value={description}
+                            onChange={(e) => { setDescription(e.target.value) }}
+                            style={{width: '40vw'}}
+                            InputProps={{readOnly: !isEditing }}
+                        />
+                    </Box>
+
+                    <Box mb={2}>
+                        <TextField
+                            type="number"
+                            label="Quantity"
+                            value={quantity}
+                            onChange={(e) => { setQuantity(e.target.value) }}
+                            style={{width: '15vw'}}
+                            InputProps={{ readOnly: !isEditing }}
+                        />
+                    </Box>
+
+                    <Box mb={2}>
+                        
+                        {user ?
+                            <Button variant="contained" sx={{ color: 'white', backgroundColor: 'red', borderColor: 'black' }} onClick={() => handleDelete(item[0])}>Delete</Button> :
+                            <></>
+                        }
+                    </Box>
+                </Grid>
+
 
             </>
 
