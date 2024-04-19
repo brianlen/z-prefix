@@ -15,29 +15,33 @@ This application was created using:
 npm, docker
 
 
-### Installing
+### Install and Setup
 
 Clone the repo:
 
 1. `git clone git@github.com:brianlen/z-prefix.git`
 
-The project is Dockerized into (1) frontend, (2) backend, and (3) database. Run the following where the docker-compose.yaml is located:
+The project is Dockerized into (1) frontend, (2) backend, and (3) database. Run 'npm install' in the local ./frontend and ./backend directories. This is necessary to have the local dependencies for the bind mount volumes.
 
-2. `docker-compose up -d`
+2.  `npm install`
+
+Run 'docker-compose up' in the directory where the docker-compose.yaml is located:
+
+3. `docker-compose up -d`
 
 The backend runs the migrate and seed for the database automatically in the start script. In case the database needs to be manually migrate and seeded, within the backend Docker container terminal, run the following:
 
-3. `npx knex migrate:rollback && npx knex migrate:latest && npx knex seed:run`
+4. `npx knex migrate:rollback && npx knex migrate:latest && npx knex seed:run`
 
 The React application is hosted on http://localhost:3000/
 The Express API server is hosted on http://localhost:8080/
 The Postgres database is hosted in the Docker container with a container name of 'db' and its default port of 5432
 
-4. Go to `http://localhost:3000/` to use the frontend.
+5. In your browser, go to `http://localhost:3000/` to use the frontend application.
 
 Three example accounts are seeded in the 'User' database. Each account has a password of 'asdf'. Passwords are stored as bcrypt hashes in the database.
 
-5. `johndoe`, `janedoe`, `henrycho`
+6. Usernames: `johndoe`, `janedoe`, `henrycho`
 
 ## Built With
 
