@@ -12,7 +12,8 @@ This application was created using:
 
 ### Prerequisites
 
-npm, docker
+* npm
+* docker
 
 
 ### Install and Setup
@@ -39,9 +40,10 @@ The Postgres database is hosted in the Docker container with a container name of
 
 5. In your browser, go to `http://localhost:3000/` to use the frontend application.
 
-Three example accounts are seeded in the 'User' database. Each account has a password of 'asdf'. Passwords are stored as bcrypt hashes in the database.
+Three example accounts are seeded in the 'User' table in the 'my_database' database. Each account has a password of `asdf`. Passwords are stored as bcryptjs hashes in the database at account creation. Use one of these account credentials, or create your own account, to login:
 
 6. Usernames: `johndoe`, `janedoe`, `henrycho`
+
 
 ## Built With
 
